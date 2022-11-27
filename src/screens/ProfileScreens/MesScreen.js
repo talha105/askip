@@ -18,8 +18,9 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 const MesScreen = () => {
-  const [Page, setPage] = useState(3);
-
+  const [Page, setPage] = useState(1);
+  const profile = useSelector(state => state?.auth?.User)
+console.log("Sfdsdf",profile)
   return (
     <>
       {/* <Text
@@ -134,17 +135,18 @@ const MesScreen = () => {
 
       <ScrollView>
         {Page == 1 ? (
-          <Page1 setPage={setPage} />
+          <Page1 setPage={setPage} profile={profile} />
         ) : Page == 2 ? (
           <Page2
             setPage={setPage}
+            profile={profile}
           />
         ) : Page == 3 ? (
-          <Page3 setPage={setPage} />
+          <Page3 setPage={setPage} profile={profile}/>
         ) : Page == 4 ? (
-          <Page4 setPage={setPage} />
+          <Page4 setPage={setPage} profile={profile}/>
         ) : Page == 5 ? (
-          <Page5 setPage={setPage} />
+          <Page5 setPage={setPage} profile={profile}/>
         ) : null}
         {/* <View style={styles.cont}>
           <TouchableOpacity

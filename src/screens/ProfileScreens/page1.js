@@ -8,7 +8,7 @@ import { SET_PAGE_ONE } from '../../redux/const/const';
 import { update_First_Page } from '../../redux/actions/user.action';
 
 let { width, height } = Dimensions.get('window');
-const Page1 = ({ setPage }) => {
+const Page1 = ({ setPage,profile }) => {
   const USER_DATA = useSelector((state) => state?.auth?.User)
   console.log(USER_DATA)
 
@@ -18,6 +18,13 @@ const Page1 = ({ setPage }) => {
   const dispatch = useDispatch()
 
 
+  useEffect(()=>{
+    if(profile){
+      setFirstName(profile?.firstName)
+      setlastName(profile?.lastName)
+      setPhone(profile?.phone)
+    }
+  },[profile])
   // useEffect(() => {
   //   if (USER_DATA) {
   //     setFirstName(USER_DATA?.firstName)

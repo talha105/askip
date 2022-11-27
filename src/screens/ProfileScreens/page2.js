@@ -21,7 +21,7 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { base_URL } from '../../config/config';
 
-const Page2 = ({ setPage }) => {
+const Page2 = ({ setPage, profile }) => {
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
   const [Select, setSelect] = useState('');
@@ -34,10 +34,47 @@ const Page2 = ({ setPage }) => {
   const dispatch = useDispatch()
   const secondPageData = useSelector((state) => state?.user?.data)
   const USER_DATA = useSelector((state) => state?.auth?.User)
-  const [validEmail, setValidEmail]=useState(false)
-  const [emailMesage, setEmailMessage]=useState("")
+  const [validEmail, setValidEmail] = useState(false)
+  const [emailMesage, setEmailMessage] = useState("")
 
   console.log("dgfs tarekhhhhhh", date)
+
+  useEffect(() => {
+    if (profile) {
+      setemail(profile?.email)
+      setDate(new Date(profile?.birthDate))
+      setAddress(profile?.postalAddress)
+      setpostal(profile?.zipCode)
+      if (profile?.gender == "Homme") {
+        setSelect({
+          "id": 1,
+          "name": "Homme"
+        })
+      }
+      if (profile?.gender == "Femme") {
+        setSelect({
+          "id": 2,
+          "name": "Femme"
+        })
+      }
+      if (profile?.gender == "Autre") {
+        setSelect({
+          "id": 3,
+          "name": "Autre"
+        })
+        setAustre1({
+          "id": 3,
+          "name": "Autre"
+        })
+      }
+      if (profile?.gender == "Non précisé") {
+        setSelect({
+          "id": 4,
+          "name": "Non précisé"
+        })
+      }
+    }
+  }, [profile])
   // const storeData = (data) => (dispatch) => {
   //   dispatch({
   //     type: SET_PAGE_TWO,
@@ -78,22 +115,22 @@ const Page2 = ({ setPage }) => {
     }
   }
 
-  function onEmail(){
-    if(email){
+  function onEmail() {
+    if (email) {
       axios.put(`${base_URL}/user/${userId}`, {
         email,
         userEmail,
         userId
       })
-      .then((res)=>{
-        setValidEmail("valid")
-        setEmailMessage(res.data?.message)
-      })
-      .catch((err)=>{
-        setValidEmail("invalid")
-        console.log(err.response.data)
-        setEmailMessage(err.response?.data?.error)
-      })
+        .then((res) => {
+          setValidEmail("valid")
+          setEmailMessage(res.data?.message)
+        })
+        .catch((err) => {
+          setValidEmail("invalid")
+          console.log(err.response.data)
+          setEmailMessage(err.response?.data?.error)
+        })
     }
   }
 
@@ -107,9 +144,9 @@ const Page2 = ({ setPage }) => {
               boxheight={height * 0.042}
               boxwidth={width * 0.5}
               dropdownwidth={width * 0.5}
-              placeholder={Select.name?<Text
+              placeholder={Select.name ? <Text
                 style={{ color: "black" }}
-              >{Select.name}</Text>: <Text> Sélécteur de genre</Text>}
+              >{Select.name}</Text> : <Text> Sélécteur de genre</Text>}
               data={Gender}
               customFunction={value => setSelect(value)}
             />
@@ -119,9 +156,9 @@ const Page2 = ({ setPage }) => {
                   boxheight={height * 0.042}
                   boxwidth={width * 0.5}
                   dropdownwidth={width * 0.5}
-                  placeholder={Austre1.name?<Text
+                  placeholder={Austre1.name ? <Text
                     style={{ color: "black" }}
-                  >{Austre1.name}</Text>: <Text style={{ color: "#afafaf" }} > Sélécteur de genre</Text>}
+                  >{Austre1.name}</Text> : <Text style={{ color: "#afafaf" }} > Sélécteur de genre</Text>}
                   data={Austre}
                   customFunction={value => setAustre1(value)}
                 />
@@ -160,7 +197,7 @@ const Page2 = ({ setPage }) => {
             onPress={() => {
               setOpen(true);
             }}>
-            <Text style={{ fontSize: width * 0.035, color:color?"black": '#b0b0b0' }}>
+            <Text style={{ fontSize: width * 0.035, color: color ? "black" : '#b0b0b0' }}>
               {moment(date).format('DD/MM/YYYY')}
             </Text>
           </TouchableOpacity>
