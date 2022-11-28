@@ -30,7 +30,7 @@ export const registerUser = (data, setLoading2, setError2, refRBSheet, refRBShee
   try {
     setLoading2(true)
     const response = await axios.post(`${base_URL}/user/register`, data)
-    console.log("register",response)
+    console.log("register",response.data)
     if (response?.data?.data?.success) {
       refRBSheet.current.open()
       refRBSheet2.current.close()

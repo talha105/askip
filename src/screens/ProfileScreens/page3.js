@@ -24,7 +24,7 @@ const { width, height } = Dimensions.get('window');
 
 
 
-const Page3 = ({ setPage }) => {
+const Page3 = ({ setPage,profile }) => {
   // const Our_data = useSelector(state => state?.user?.getKiffsData);
   // console.log(thirdPageData,"thirdPageData");
   const data = [
@@ -76,11 +76,32 @@ const Page3 = ({ setPage }) => {
     dispatch(getKiffsData())
   }, [])
 
+
+
   useEffect(() => {
     if (thirdPageData.length > 0) {
       setMyKiffs(thirdPageData.map(it => ({ ...it, selected: false })))
     }
   }, [thirdPageData])
+
+
+  useEffect(()=>{
+    if(profile?.kiffs?.length>0){
+     const da=thirdPageData.map((it)=>{
+       const check=profile?.kiffs.filter(id=>id==it._id).length
+       if(check){
+         return {
+           ...it,
+           selected:true,
+           isSelected:true
+         }
+       }else{
+         return {...it,selected:false}
+       }})
+      //  console.log("myyyyy",da)
+      setMyKiffs(da)
+    }
+  },[profile,thirdPageData])
   // useEffect(() => {
   //   if (USER_DATA) {
   //     setCode(USER_DATA?.discordUserName)

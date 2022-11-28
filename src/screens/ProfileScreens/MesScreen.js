@@ -18,7 +18,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 const MesScreen = () => {
-  const [Page, setPage] = useState(1);
+  const [Page, setPage] = useState(5);
   const profile = useSelector(state => state?.auth?.User)
 console.log("Sfdsdf",profile)
   return (

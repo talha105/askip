@@ -16,7 +16,7 @@ const { width, height } = Dimensions.get('window');
 import { imageUpload, profileUpdate } from "../../redux/actions/user.action"
 import { useEffect } from 'react';
 
-const Page5 = ({ setPage }) => {
+const Page5 = ({ setPage ,profile}) => {
 
   const [IdCardNo, setIdCardNo] = useState();
   const [imagename, setimageName] = useState("")
@@ -32,6 +32,11 @@ const Page5 = ({ setPage }) => {
 // }
 // },[USER_DATA])
 
+useEffect(()=>{
+  if(profile?.identityCardNumber!==null){
+    setIdCardNo(profile?.identityCardNumber)
+  }
+},[profile])
   const dispatch = useDispatch()
 
   // const fivePageData = useSelector((state) => state?.auth?.User)
