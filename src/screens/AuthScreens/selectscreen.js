@@ -80,16 +80,18 @@ const Selectscreen = ({ navigation }) => {
     },
   ];
 
-  useEffect(()=>{
-    if( password?.length==0||phone?.length==0 ){
+  useEffect(() => {
+    
+    if (password?.length === 0 || phone?.length === 0) {
       setcolor(false)
-    }else{setcolor(true)}
-  },[phone,password])
-  useEffect(()=>{
-    if(firstName?.length==0 ||lastName?.length==0||phoneNumber?.length==0){
+    } else if (password === undefined || phone === undefined) { setcolor(false) } else { setcolor(true) }
+  }, [phone, password])
+  useEffect(() => {
+    if (firstName?.length == 0 || lastName?.length == 0 || phoneNumber?.length == 0) {
       setcolor2(false)
-    }else{setcolor2(true)}
-  },[firstName,lastName,phoneNumber])
+    } else if(firstName == undefined || lastName == undefined || phoneNumber == undefined)
+    { setcolor2(false) }else{setcolor2(true)}
+  }, [firstName, lastName, phoneNumber])
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
@@ -99,13 +101,14 @@ const Selectscreen = ({ navigation }) => {
       phone: phone?.replace(/ /g, '').slice(1),
       password,
     };
-    if(data.phone==undefined||data.password==undefined) {
+    console.log(data)
+    if (data.phone == undefined || data.password == undefined) {
       setError(true)
-     }else{
-       console.log("hhda",data)
-       dispatch(userLogin(data, setLoading, setError));
-     }
- 
+    } else {
+      console.log("hhda", data)
+      dispatch(userLogin(data, setLoading, setError));
+    }
+
   };
 
   const registerUser_hit = () => {
@@ -113,18 +116,17 @@ const Selectscreen = ({ navigation }) => {
     let data = {
       firstName: firstName,
       lastName: lastName,
-      // email: Verifyemail || null,
-      phone: phoneNumber?.slice(1) || null
+      phone: phoneNumber?.replace(/ /g, '').slice(1)
     };
     console.log(data)
-    if (data.firstName===undefined||data.lastName===undefined||data.phone===undefined){
-    setError2(true)
+    if (data.firstName === undefined || data.lastName === undefined || data.phone === undefined) {
+      setError2(true)
 
-  }else{
-   dispatch(registerUser(data, setLoading2, setError2, refRBSheet, refRBSheet2))
-    setError2(false)
-   }
-   
+    } else {
+      dispatch(registerUser(data, setLoading2, setError2, refRBSheet, refRBSheet2))
+      setError2(false)
+    }
+
   };
   const Ottp_Code = () => {
     let data = {
@@ -251,6 +253,9 @@ const Selectscreen = ({ navigation }) => {
               </Text>
             </View>
           ) : null}
+          <Text
+            style={style.tage}
+          >Numéro de téléphone</Text>
 
           <View
             style={{
@@ -267,24 +272,29 @@ const Selectscreen = ({ navigation }) => {
               value={phone}
               placeholder="06.06.06.06.06"
               placeholderTextColor="#afafaf"
-              style={{color:"black"}}
+              style={{ color: "black" }}
               onChangeText={(masked, unmasked) => {
                 setPhone(masked);
               }}
-              maxLength={12}
+              maxLength={18}
               keyboardType="numeric"
               mask={[
                 /\d/,
                 /\d/,
                 ' ',
                 ' ',
-
                 /\d/,
                 /\d/,
+                ' ',
+                ' ',
                 /\d/,
                 /\d/,
+                ' ',
+                ' ',
                 /\d/,
                 /\d/,
+                ' ',
+                ' ',
                 /\d/,
                 /\d/,
               ]}
@@ -357,7 +367,7 @@ const Selectscreen = ({ navigation }) => {
           </View>
 
           <Connnection
-          color={color==false?Colors.grey:Colors.ButtonBorder}
+            color={color == false ? Colors.grey : Colors.ButtonBorder}
             title={
               loading ? (
                 <ActivityIndicator color="white" size="small" />
@@ -442,7 +452,7 @@ const Selectscreen = ({ navigation }) => {
 
                 <View style={{ marginTop: height * 0.12 }}>
                   <Connnection
-                  color="#afafaf"
+                    color="#afafaf"
                     link={() => userConfirmation()}
                     title="Créer mon compte"
                   />
@@ -532,14 +542,60 @@ const Selectscreen = ({ navigation }) => {
               placeholder="Laurent"
             />
           </View>
-          <Forminput
+          <Text
+            style={style.tage}
+          >Numéro de téléphone*</Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              borderWidth: 1,
+              borderColor: '#606469',
+              width: width * 0.78,
+              alignItems: 'center',
+              alignSelf: 'center',
+              borderRadius: width * 0.01,
+              paddingLeft: width * 0.04,
+            }}>
+            <MaskInput
+              value={phoneNumber}
+              placeholder="06.06.06.06.06"
+              placeholderTextColor="#afafaf"
+              style={{ color: "black" }}
+              onChangeText={(masked, unmasked) => {
+                setphoneNumber(masked);
+              }}
+              maxLength={18}
+              keyboardType="numeric"
+              mask={[
+                /\d/,
+                /\d/,
+                ' ',
+                ' ',
+                /\d/,
+                /\d/,
+                ' ',
+                ' ',
+                /\d/,
+                /\d/,
+                ' ',
+                ' ',
+                /\d/,
+                /\d/,
+                ' ',
+                ' ',
+                /\d/,
+                /\d/,
+              ]}
+            />
+          </View>
+          {/* <Forminput
             value={phoneNumber}
             setvalue={setphoneNumber}
             type="numeric"
             title="Numéro de téléphone*"
             placeholder="00.00.06.06.06"
             maxletter={10}
-          />
+          /> */}
 
           <View
             style={{
@@ -629,17 +685,17 @@ const Selectscreen = ({ navigation }) => {
                 {/* {item.name} */}
                 En cliquant ici, tu acceptes les{' '}
                 <TouchableOpacity
-                onPress={()=>{Linking.openURL('https://askip-app.fr/conditions-generales-utilisations')}}
+                  onPress={() => { Linking.openURL('https://askip-app.fr/conditions-generales-utilisations') }}
                 >
-                  <Text style={{ 
+                  <Text style={{
                     textDecorationLine: 'underline',
-                    color:"black",
-                    fontFamily: 'Bebas Neue Pro Regular', 
+                    color: "black",
+                    fontFamily: 'Bebas Neue Pro Regular',
                     fontSize: width * 0.043,
                     letterSpacing: 0.25,
-                 }}>
-                  Conditions d’utilisation
-                </Text></TouchableOpacity>
+                  }}>
+                    Conditions d’utilisation
+                  </Text></TouchableOpacity>
 
                 , la
                 <Text style={{ textDecorationLine: 'underline' }}>
@@ -657,7 +713,7 @@ const Selectscreen = ({ navigation }) => {
               source={require('../../assets/images/twist.png')}
             />
           </View>
-          <Connnection color={color2==false?Colors.grey:Colors.ButtonBorder} link={() => registerUser_hit()}
+          <Connnection color={color2 == false ? Colors.grey : Colors.ButtonBorder} link={() => registerUser_hit()}
 
             title={
               loading2 ? (
@@ -1037,5 +1093,16 @@ const style = StyleSheet.create({
     color: Colors.ButtonBorder,
     fontFamily: 'Bebas Neue Pro Regular',
     fontSize: width * 0.045,
+  },
+  tage: {
+    marginLeft: width * 0.12,
+    paddingBottom: height * 0.01,
+    color: "black",
+    fontWeight: "600",
+    // fontSize:width*0.035,
+    fontFamily: 'Bebas Neue Pro Bold',
+    fontSize: width * 0.0415,
+    // marginBottom:-height*0.01,
+
   },
 });

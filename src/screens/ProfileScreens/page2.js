@@ -37,12 +37,12 @@ const Page2 = ({ setPage, profile }) => {
   const [validEmail, setValidEmail] = useState(false)
   const [emailMesage, setEmailMessage] = useState("")
 
-  console.log("dgfs tarekhhhhhh", date)
+
 
   useEffect(() => {
     if (profile) {
       setemail(profile?.email)
-      setDate(new Date(profile?.birthDate))
+      // setDate(new Date(profile?.birthDate))
       setAddress(profile?.postalAddress)
       setpostal(profile?.zipCode)
       if (profile?.gender == "Homme") {
@@ -75,20 +75,7 @@ const Page2 = ({ setPage, profile }) => {
       }
     }
   }, [profile])
-  // const storeData = (data) => (dispatch) => {
-  //   dispatch({
-  //     type: SET_PAGE_TWO,
-  //     payload: { ...secondPageData, ...data }
-  //   })
-  // }
-  // useEffect(() => {
-  //   if (USER_DATA) {
-  //     setemail(USER_DATA?.email)
-  //     setpostal(USER_DATA?.zipCode)
-  //     setAddress(USER_DATA?.postalAddress)
 
-  //   }
-  // }, [USER_DATA])
 
   const userId = useSelector((state) => state?.auth?.credential?.User?._id)
   const userEmail = useSelector((state) => state?.auth?.credential?.User?.email)
@@ -197,8 +184,12 @@ const Page2 = ({ setPage, profile }) => {
             onPress={() => {
               setOpen(true);
             }}>
+           {/* { profile?.birthDate? <Text style={{ fontSize: width * 0.035, color: color ? "black" : 'black' }}>
+              {moment(profile?.birthDate).format('DD/MM/YYYY')}
+            </Text>
+              : */}
             <Text style={{ fontSize: width * 0.035, color: color ? "black" : '#b0b0b0' }}>
-              {moment(date).format('DD/MM/YYYY')}
+              {!color?moment(profile?.birthDate).format('DD/MM/YYYY'):moment(date).format('DD/MM/YYYY')}
             </Text>
           </TouchableOpacity>
           <DatePicker

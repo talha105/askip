@@ -18,7 +18,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 const MesScreen = () => {
-  const [Page, setPage] = useState(5);
+  const [Page, setPage] = useState(1);
   const profile = useSelector(state => state?.auth?.User)
 console.log("Sfdsdf",profile)
   return (
@@ -34,9 +34,9 @@ console.log("Sfdsdf",profile)
             marginTop: height * 0.02,
           }}>
           <TouchableOpacity
-            // onPress={() => {
-            //   setPage(1);
-            // }}
+            onPress={() => {
+              setPage(1);
+            }}
             style={[
               styles.check,
               {
@@ -55,9 +55,9 @@ console.log("Sfdsdf",profile)
               },
             ]}></View>
           <TouchableOpacity
-            // onPress={() => {
-            //   setPage(2);
-            // }}
+            onPress={() => {
+              setPage(2);
+            }}
             style={[
               styles.check,
               {
@@ -76,9 +76,9 @@ console.log("Sfdsdf",profile)
               },
             ]}></View>
           <TouchableOpacity
-            // onPress={() => {
-            //   setPage(3);
-            // }}
+            onPress={() => {
+              setPage(3);
+            }}
             style={[
               styles.check,
               {
@@ -97,9 +97,9 @@ console.log("Sfdsdf",profile)
               },
             ]}></View>
           <TouchableOpacity
-            // onPress={() => {
-            //   setPage(4);
-            // }}
+            onPress={() => {
+              setPage(4);
+            }}
             style={[
               styles.check,
               {
@@ -118,9 +118,9 @@ console.log("Sfdsdf",profile)
               },
             ]}></View>
           <TouchableOpacity
-            // onPress={() => {
-            //   setPage(5);
-            // }}
+            onPress={() => {
+              setPage(5);
+            }}
             style={[
               styles.check,
               {

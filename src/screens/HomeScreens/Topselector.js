@@ -28,10 +28,12 @@ const Topselector = () => {
     },
     {
       id: 2,
-      name: '"Les prochains événements',
+      name: 'Les prochains événements',
       notification: 2,
     },
     {
+
+      
       id: 3,
       name: 'Mes événements favoris',
       notification: 0,

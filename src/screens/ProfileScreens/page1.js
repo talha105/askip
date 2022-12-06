@@ -19,10 +19,11 @@ const Page1 = ({ setPage,profile }) => {
 
 
   useEffect(()=>{
+     var number=0+ profile?.phone?.slice(2)
     if(profile){
       setFirstName(profile?.firstName)
       setlastName(profile?.lastName)
-      setPhone(profile?.phone)
+      setPhone(number)
     }
   },[profile])
   // useEffect(() => {
@@ -40,6 +41,7 @@ const Page1 = ({ setPage,profile }) => {
 
 
   const userId = useSelector((state) => state?.auth?.credential?.User?._id)
+  console.log("real id",userId)
   // const USER_DATA=useSelector((state)=>state?.auth?.User?.data)
   // console.log("USER_DATAUSER_DATAUSER_DATAUSER_DATA",USER_DATA)
   const setPageOneData = () => {

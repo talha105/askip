@@ -8,59 +8,102 @@ import {
   Alert,
 
 } from 'react-native';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Inputs from '../../components/Inputs';
 import FormInput from '../../components/Forminput';
-import {SignupBtn, Loginbtn} from '../../components/BTNS';
-import { useSelector,useDispatch } from 'react-redux';
-import {Delete_User} from "../../redux/actions/user.action"
+import { SignupBtn, Loginbtn } from '../../components/BTNS';
+import { useSelector, useDispatch } from 'react-redux';
+import { ChangesPassword, Delete_User } from "../../redux/actions/user.action"
 import { SceneMap } from 'react-native-tab-view';
 
-const {height, width} = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
 
-const CPage1 = ({page,setPage,navigationState}) => {
+const CPage1 = ({ page, setPage, navigationState }) => {
   const [eye, seteye] = useState(true);
   const [eye2, seteye2] = useState(true);
   const [eye3, seteye3] = useState(true);
+  const [oldPass, setOldPass] = useState();
+  const [newPass, setNewPass] = useState();
+  const [confNewPass, setConfNewPass] = useState();
   const id = useSelector(state => state?.auth?.credential?.User?._id);
   const token = useSelector(state => state?.auth?.credential?.token);
-  const credentialemail=useSelector(state => state?.auth?.credential?.User?.email)
-  const email=useSelector(state => state?.auth?.User?.data?.email)
-  const userData=useSelector(state => state?.auth?.User)
-  console.log("page1 email",email)
- const dispatch=useDispatch()
-  const delete_User=()=>{
-dispatch(Delete_User(id,token))
+  const credentialemail = useSelector(state => state?.auth?.credential?.User?.email)
+  const email = useSelector(state => state?.auth?.User?.data?.email)
+  const userData = useSelector(state => state?.auth?.User)
+  const [error, setError] = useState("")
+  console.log("page1 email", email)
+  const dispatch = useDispatch()
+  const delete_User = () => {
+    dispatch(Delete_User(id, token))
   }
-  
+
 
   console.log(page)
-  const consultdata=()=>{
-    if(email ||credentialemail ){
-    setPage(7)
-    }else{
+  const consultdata = () => {
+    if (email || credentialemail) {
+      setPage(7)
+    } else {
       Alert.alert(
         "Attention",
         "L'e-mail n'existe pas, mettez d'abord à jour votre profil",
         [
           {
             text: "d'accord",
-             onPress: () => setPage(1),
+            onPress: () => setPage(1),
             style: "cancel",
           },
-        
+
         ],
-       
+
       );
     }
   }
+  const Delete_data = () => {
+    if (email || credentialemail) {
+      setPage(10)
+    } else {
+      Alert.alert(
+        "Attention",
+        "L'e-mail n'existe pas, mettez d'abord à jour votre profil",
+        [
+          {
+            text: "d'accord",
+            onPress: () => setPage(1),
+            style: "cancel",
+          },
 
+        ],
+
+      );
+    }
+  }
+  const changePassword = () => {
+    let data = {
+      oldPassword: oldPass,
+      newPassword: newPass,
+      confirmPassword: confNewPass,
+    }
+
+    if (data?.oldPassword == undefined || data?.newPassword == undefined || data?.confirmPassword == undefined) {
+      alert("fill all")
+    } else {
+      dispatch(ChangesPassword(data, id, setError))
+    }
+
+
+
+  }
   return (
 
-    <View>
+    <View style={{
+      marginBottom: height * 0.01
+    }}>
 
       <Text style={styles.heading}>
         Votre mot de passe doit contenir 4 chiffres
+      </Text>
+      <Text style={styles.changeError}>
+        {error}
       </Text>
       <View>
         <FormInput
@@ -70,6 +113,8 @@ dispatch(Delete_User(id,token))
           contentype={'password'}
           security={eye}
           maxletter={4}
+          setvalue={setOldPass}
+          value={oldPass}
         />
         <TouchableOpacity
           style={styles.eye}
@@ -86,7 +131,7 @@ dispatch(Delete_User(id,token))
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-           setPage(2)
+            setPage(2)
           }}>
           <Text style={styles.textline}>
             Mot de passe oublié ? Je le réinitialise
@@ -101,6 +146,8 @@ dispatch(Delete_User(id,token))
           contentype={'password'}
           security={eye2}
           maxletter={4}
+          setvalue={setNewPass}
+          value={newPass}
         />
         <TouchableOpacity
           style={styles.eye}
@@ -124,6 +171,8 @@ dispatch(Delete_User(id,token))
           contentype={'password'}
           security={eye3}
           maxletter={4}
+          setvalue={setConfNewPass}
+          value={confNewPass}
         />
         <TouchableOpacity
           style={styles.eye}
@@ -139,12 +188,12 @@ dispatch(Delete_User(id,token))
           />
         </TouchableOpacity>
       </View>
-      <Loginbtn title={'Confirmer'} />
-      <SignupBtn link={()=>consultdata()} title={'Télécharger mes données'} />
+      <Loginbtn link={() => changePassword()} title={'Confirmer'} />
+      <SignupBtn link={() => consultdata()} title={'Télécharger mes données'} />
       <SignupBtn
-      // link={()=>{delete_User()}}
-            link={()=>{setPage(10)}}
-       title={'Supprimer mon compte'} />
+        // link={()=>{delete_User()}}
+        link={() => Delete_data()}
+        title={'Supprimer mon compte'} />
     </View>
   );
 };
@@ -159,7 +208,7 @@ const styles = StyleSheet.create({
     marginLeft: width * 0.12,
     fontFamily: 'Bebas Neue Pro Regular',
     fontSize: width * 0.035,
-    color:"#afafaf"
+    color: "#afafaf"
   },
   heading: {
     // fontSize: width * 0.035,
@@ -176,5 +225,12 @@ const styles = StyleSheet.create({
     marginTop: height * 0.06,
     marginLeft: width * 0.8,
     // alignItems:"center"
+  },
+  changeError: {
+    fontWeight: '600',
+    color: 'red',
+    fontFamily: 'Bebas Neue Pro Regular',
+    fontSize: width * 0.04,
+    marginLeft: width * 0.12
   },
 });

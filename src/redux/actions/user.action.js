@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Alert } from "react-native";
 import { base_URL, base_URL_Muhib } from "../../config/config";
-import { LOG_IN, REGISTER, FORGET_PASSWORD, SEND_OTP, LOG_OUT, ID_CARD_IMAGE, FORGET_INNER_PASSWORD, GET_KIFFS_DATA, CONSULT_DATA, RELEVENT, DATA_EMPTY, SET_PAGE_ONE, SET_PAGE_TWO, SET_PAGE_THREE, SET_PAGE_FOUR, PROFILE_IMAGE } from "../const/const";
+import { LOG_IN, REGISTER, FORGET_PASSWORD, SEND_OTP, LOG_OUT, ID_CARD_IMAGE, FORGET_INNER_PASSWORD, GET_KIFFS_DATA, CONSULT_DATA, RELEVENT, DATA_EMPTY, SET_PAGE_ONE, SET_PAGE_TWO, SET_PAGE_THREE, SET_PAGE_FOUR, PROFILE_IMAGE, GET_EVENTS } from "../const/const";
 
 
 export const userLogin = (data, setLoading, setError) => async (dispatch) => {
@@ -30,7 +30,7 @@ export const registerUser = (data, setLoading2, setError2, refRBSheet, refRBShee
   try {
     setLoading2(true)
     const response = await axios.post(`${base_URL}/user/register`, data)
-    console.log("register",response.data)
+    console.log("register", response)
     if (response?.data?.data?.success) {
       refRBSheet.current.open()
       refRBSheet2.current.close()
@@ -47,7 +47,7 @@ export const registerUser = (data, setLoading2, setError2, refRBSheet, refRBShee
 export const forget_Password = (data, setM2, setM3) => async (dispatch) => {
   try {
     const response = await axios.post(`${base_URL}/user/sendotp`, data)
-    // console.log(response.data,"khjgjhgkgkjgkg")
+    console.log(response.data,"khjgjhgkgkjgkg")
     if (response?.data?.data?.success) {
       setM2(false)
       setM3(true)
@@ -83,7 +83,7 @@ export const forget_Inner_Password = (data, setPage) => async (dispatch) => {
 
 
 export const userVerifyInfo = (data, setpasswordSet) => async () => {
-  console.log("canhbdkjbs csbkj xm ckjs sck b",data)
+  console.log("canhbdkjbs csbkj xm ckjs sck b", data)
   try {
     const response = await axios.post(`${base_URL}/user/verfi`, data)
     console.log(response.data)
@@ -108,11 +108,11 @@ export const Inner_userVerifyInfo = (data, setPage) => async () => {
   }
 };
 export const password_Reset = (data, refRBSheet3) => async () => {
-  console.log("passwerd change",data)
+  console.log("passwerd change", data)
 
   try {
     const response = await axios.post(`${base_URL}/user/confirmpass`, data)
-    console.log("messsg yahan dikha bhai chitooooo",response)
+    console.log("messsg yahan dikha bhai chitooooo", response)
     if (response) {
       // console.log("SUCCESSS")
       // (response?.data?.data?.success)
@@ -391,6 +391,133 @@ export const Send_link = (data, setPage) => async (dispatch) => {
     console.log("erorrrrrrrrrrr", error)
   }
 };
+export const ChangesPassword = (data, userId, setError) => async (dispatch) => {
+  console.log("change passweord datat on useraction",data,userId)
+  try {
+    const response = await axios.put(`${base_URL}/user/changepass/${userId}`, data)
+    console.log(response?.data?.success)
+
+    if (response?.data?.success) {
+      console.log("ok hogya")
+    }
+  }
+  catch (error) {
+    console.log(error)
+    console.log(error?.response?.data?.message)
+    setError(error?.response?.data?.message)
+
+  }
+};
+
+// events section 
+
+export const getEvents = () => async (dispatch) => {
+  try {
+    const response = await axios.get(`${base_URL}/auth/getEvents`)
+    console.log("revelaothfklasgk ",response)
+    return response
+    // if (data?.data?.success){
+    //   console.log(response)
+    //    dispatch({
+    //      type:RELEVENT,
+    //     payload:data?.data?.relevant
+    //    })
+    // }
+  }
+  catch (error) {
+    console.log("hdfhh", error)
+  }
+};
+export const getEventsByID = async (data) => {
+  try {
+    const response = await axios.get(`${base_URL}/auth/getEvent/${data}`)
+    console.log("event ka data ",response)
+    return response
+    // if (data?.data?.success){
+    //   console.log(response)
+    //    dispatch({
+    //      type:RELEVENT,
+    //     payload:data?.data?.relevant
+    //    })
+    // }
+  }
+  catch (error) {
+    console.log("nhi aya", error)
+  }
+};
+export const Subscribe_Event = (data,userId,setRefetch,refetch) => async (dispatch) => {
+  
+  console.log("subscribe data", userId)
+ 
+  try {
+    const response = await axios.put(`${base_URL}/auth/subsribeEvent/${data}`,{userId})
+    console.log("subcribe okkk ",response)
+    
+    if (response?.data) {
+      setRefetch(false)
+      console.log("yahan aja andr", response)
+      
+      
+    }
+  }
+  catch (error) {
+    console.log("subcribe eerrrr", error)
+  }
+};
+export const ProfileChecking = (userId,setPower,setBTN) => async (dispatch) => {
+  console.log(userId)
+  try {
+    const response = await axios.get(`${base_URL}/user/checkingSteps/${userId}`)
+    console.log("revelaothfklasgk ",response?.data?.success)
+   
+    if (response?.data?.success){
+      setBTN(true)
+      console.log(response)
+      
+    }
+  }
+  catch (error) {
+    setPower(true)
+    console.log("hdfhh", error)
+  }
+};
+export const Un_Subscribe_Event = (data,userId) => async (dispatch) => {
+  
+  console.log("subscribe data", userId)
+ 
+  try {
+    const response = await axios.put(`${base_URL}/auth/unSubscribeEvent/${data}`,{userId})
+    console.log("subcribe okkk ",response)
+    // if (response?.data) {
+    //   console.log("yahan aja andr", response)
+      
+      
+    // }
+  }
+  catch (error) {
+    console.log("subcribe eerrrr", error)
+  }
+};    
+
+// home screen /////////
+
+export const getSubscribedEvents = async (userId)  => {
+  try {
+    const response = await axios.get(`${base_URL}/auth/getSubscribeEvents/${userId}`)
+    console.log("revelaothfklasgk ",response)
+    return response
+    // if (data?.data?.success){
+    //   console.log(response)
+    //    dispatch({
+    //      type:RELEVENT,
+    //     payload:data?.data?.relevant
+    //    })
+    // }
+  }
+  catch (error) {
+    console.log("hdfhh", error)
+  }
+};
 
 
 // export const getData = (token) => async (dispatch) => {
@@ -411,3 +538,5 @@ export const Send_link = (data, setPage) => async (dispatch) => {
 //       console.log(error)
 //     }
 //   };
+
+

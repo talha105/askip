@@ -12,6 +12,8 @@ const {height, width} = Dimensions.get('window');
 
 const WalletScreens = () => {
 
+  const userId = useSelector((state) => state?.auth?.credential?.User?._id)
+ console.log("real oid",userId)
   return (
     <View
     style={styles.container}

@@ -20,11 +20,12 @@ import { log } from 'console';
 import { update_Third_Page, getKiffsData } from '../../redux/actions/user.action';
 import { set } from 'immer/dist/internal';
 import { base_URL_IMAGE } from '../../config/config';
+import Colors from '../../components/Colors';
 const { width, height } = Dimensions.get('window');
 
 
 
-const Page3 = ({ setPage,profile }) => {
+const Page3 = ({ setPage, profile }) => {
   // const Our_data = useSelector(state => state?.user?.getKiffsData);
   // console.log(thirdPageData,"thirdPageData");
   const data = [
@@ -68,7 +69,7 @@ const Page3 = ({ setPage,profile }) => {
   const [updatedData, setUpdatedData] = useState();
 
   const thirdPageData = useSelector((state) => state?.user?.getKiffsData)
-
+  console.log("thirdPageData", myKiffs)
 
   const dispatch = useDispatch();
 
@@ -85,23 +86,24 @@ const Page3 = ({ setPage,profile }) => {
   }, [thirdPageData])
 
 
-  useEffect(()=>{
-    if(profile?.kiffs?.length>0){
-     const da=thirdPageData.map((it)=>{
-       const check=profile?.kiffs.filter(id=>id==it._id).length
-       if(check){
-         return {
-           ...it,
-           selected:true,
-           isSelected:true
-         }
-       }else{
-         return {...it,selected:false}
-       }})
+  useEffect(() => {
+    if (profile?.kiffs?.length > 0) {
+      const da = thirdPageData.map((it) => {
+        const check = profile?.kiffs.filter(id => id == it._id).length
+        if (check) {
+          return {
+            ...it,
+            selected: true,
+            isSelected: true
+          }
+        } else {
+          return { ...it, selected: false }
+        }
+      })
       //  console.log("myyyyy",da)
       setMyKiffs(da)
     }
-  },[profile,thirdPageData])
+  }, [profile, thirdPageData])
   // useEffect(() => {
   //   if (USER_DATA) {
   //     setCode(USER_DATA?.discordUserName)
@@ -128,9 +130,9 @@ const Page3 = ({ setPage,profile }) => {
   const PageThreeData = () => {
     let dataa = {
       discordUserName: code,
-      kiffs: myKiffs.filter(it=>it.selected==true).map(it=>it._id),
+      kiffs: myKiffs.filter(it => it.selected == true).map(it => it._id),
     };
-    if (myKiffs.filter(it=>it.selected==true).length === 0) {
+    if (myKiffs.filter(it => it.selected == true).length === 0) {
       return alert("Tous les champs sont obligatoires")
     }
     else {
@@ -152,21 +154,22 @@ const Page3 = ({ setPage,profile }) => {
             flexWrap: 'wrap',
             alignSelf: "center"
           }}>
-            
-          {(myKiffs.filter(it=>it.selected==false) && myKiffs.filter(it=>it.selected==false).length) ? myKiffs.filter(it=>it.selected==false).map((item, i) => (
+
+          {(myKiffs.filter(it => it.selected == false) && myKiffs.filter(it => it.selected == false).length) ? myKiffs.filter(it => it.selected == false).map((item, i) => (
+
             <TouchableOpacity
-            key={i}
+              key={i}
               style=
-              {{ margin: width * 0.02 }}
+              {{ margin: width * 0.02, justifyContent: "center" }}
               // activeOpacity={100}
               onPress={() => {
-                const oldKiff=myKiffs.map(it=>{
-                  if(it._id==item._id){
+                const oldKiff = myKiffs.map(it => {
+                  if (it._id == item._id) {
                     return {
                       ...it,
-                      isSelected:!it.isSelected
+                      isSelected: !it.isSelected
                     }
-                  }else{
+                  } else {
                     return it
                   }
                 })
@@ -181,8 +184,20 @@ const Page3 = ({ setPage,profile }) => {
                   borderColor: '#ffbc16',
                 }}
                 resizeMode="cover"
-                source={{uri:base_URL_IMAGE+item.url}}
+                source={{ uri: `${base_URL_IMAGE + item.url}` }}
               />
+              <Text
+                style={{
+                  color: Colors.ButtonBorder,
+                  fontSize: width * 0.06,
+                  position: "absolute",
+                  fontFamily: "Bebas Neue Pro Bold",
+                  alignSelf: "center",
+                  marginTop: height * 0.025,
+                  width: width * 0.25,
+                  textAlign: "center"
+                }}
+              >{item?.name}</Text>
             </TouchableOpacity>
           )) : null}
         </View>
@@ -192,18 +207,18 @@ const Page3 = ({ setPage,profile }) => {
             { backgroundColor: myKiffs.length == 0 ? '#c7c7c7' : "#ffbc15" }
           ]}
           onPress={() => {
-              const oldKiff=myKiffs.map(it=>{
-                if(it.isSelected){
-                  return {
-                    ...it,
-                    selected:true
-                  }
-                }else{
-                  return it
+            const oldKiff = myKiffs.map(it => {
+              if (it.isSelected) {
+                return {
+                  ...it,
+                  selected: true
                 }
-              })
-              setMyKiffs(oldKiff)
-              refRBSheet.current.close()
+              } else {
+                return it
+              }
+            })
+            setMyKiffs(oldKiff)
+            refRBSheet.current.close()
           }}>
           <Text style={styles.rbbtntext1}> Continuer </Text>
         </TouchableOpacity>
@@ -217,19 +232,20 @@ const Page3 = ({ setPage,profile }) => {
   };
 
   const renderItem = ({ item }) => {
+    console.log("item", item)
     return (
       <View>
         <TouchableOpacity
           style={{ zIndex: 11 }}
           onPress={() => {
-            const oldKiff=myKiffs.map(it=>{
-              if(it._id==item._id){
+            const oldKiff = myKiffs.map(it => {
+              if (it._id == item._id) {
                 return {
                   ...it,
-                  selected:false,
-                  isSelected:false
+                  selected: false,
+                  isSelected: false
                 }
-              }else{
+              } else {
                 return it
               }
             })
@@ -248,8 +264,30 @@ const Page3 = ({ setPage,profile }) => {
             source={require("../../assets/images/cancelbtn.png")}
           />
         </TouchableOpacity>
-        <TouchableOpacity style={{ marginLeft: width * 0.035 }}>
-          <Image style={styles.backgroundImage} resizeMode="cover" source={{ uri: base_URL_IMAGE + item.url }} />
+        <TouchableOpacity
+        style={{justifyContent:"center"}}
+        >
+          <Image style={{
+            width: width * 0.35,
+            height: height * 0.15,
+            margin: width * 0.013,
+            alignItems: 'center',
+            justifyContent: 'center',
+            resizeMode: "contain",
+            borderRadius: width * 0.03
+          }} source={{ uri: `${base_URL_IMAGE + item.url}` }} />
+          <Text
+            style={{
+              color: Colors.ButtonBorder,
+              fontSize: width * 0.06,
+              position: "absolute",
+              fontFamily: "Bebas Neue Pro Bold",
+              alignSelf: "center",
+              marginTop: height * 0.025,
+              width: width * 0.25,
+              textAlign: "center"
+            }}
+          >{item?.name}</Text>
         </TouchableOpacity>
 
 
@@ -257,14 +295,14 @@ const Page3 = ({ setPage,profile }) => {
     );
   };
 
-  function checkSport(){
-    var flag=false
-     myKiffs.filter(it=>it.selected==true).forEach(it=>{
-       if(it.name=="E-sport"){
-         flag=true
-       }
-     })
-     return flag
+  function checkSport() {
+    var flag = false
+    myKiffs.filter(it => it.selected == true).forEach(it => {
+      if (it.name.toUpperCase() == "E-SPORT") {
+        flag = true
+      }
+    })
+    return flag
   }
   return (
     <>
@@ -273,35 +311,43 @@ const Page3 = ({ setPage,profile }) => {
         horizontal={true}
         // scrollIndicatorInsets={false}
         showsHorizontalScrollIndicator={false}> */}
-        <View
-          style={{
-            flexDirection: 'row',
-          }}>
-          <FlatList
-            showsHorizontalScrollIndicator={false}
-            horizontal={true}
-            data={myKiffs.filter(it=>it.selected)}
-            keyExtractor={item => item.id}
-            renderItem={renderItem}
+      <View
+        style={{
+          flexDirection: 'row',
+        }}>
+        <FlatList
+          showsHorizontalScrollIndicator={false}
+          horizontal={true}
+          data={myKiffs.filter(it => it.selected)}
+          keyExtractor={item => item.id}
+          renderItem={renderItem}
 
-            ListFooterComponent={() => {
-              return(
-                <TouchableOpacity
-                disabled={myKiffs.filter(it=>it.selected).length == thirdPageData.length ? true : false}
-                style={{ marginLeft: width * 0.035,
+          ListFooterComponent={() => {
+            return (
+              <TouchableOpacity
+                disabled={myKiffs.filter(it => it.selected).length == thirdPageData.length ? true : false}
+                style={{
+                  marginLeft: width * 0.035,
                   width: width * 0.35,
                   height: height * 0.15,
                 }}
                 onPress={() => refRBSheet.current.open()}>
                 <Image
-                  // imageStyle={{borderRadius: width * 0.032,}}
-                  style={styles.backgroundImage}
+
+                  style={{
+                    width: width * 0.35,
+                    height: height * 0.15,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    resizeMode: "contain",
+                    marginBottom: height * 0.028
+                  }}
                   source={require('../../assets/images/select.png')}></Image>
               </TouchableOpacity>
-              )
-            }}
-          />
-        </View>
+            )
+          }}
+        />
+      </View>
       {/* </ScrollView> */}
       {
         checkSport() && (
@@ -396,11 +442,12 @@ const styles = StyleSheet.create({
     marginLeft: width * 0.025,
   },
   backgroundImage: {
-    width: width * 0.35,
+    width: width * 0.38,
     height: height * 0.15,
     margin: width * 0.013,
     alignItems: 'center',
     justifyContent: 'center',
+    resizeMode: "contain"
   },
   btntext: {
     color: '#fcbe18',

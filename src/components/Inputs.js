@@ -28,11 +28,8 @@ const Inputs = props => {
           maxLength={props.maxletter}
           placeholderTextColor="#9e9e9e"
           onFocus={props.onFocus}
-          onBlur={props.blur}
         />
       </View>
-      {props.validEmail=="invalid" && <Text style={{color:'red',fontSize:10,textAlign:'right'}}>{props.emailMesage}</Text>}
-      {props.validEmail=="valid"&& <Text style={{color:'green',fontSize:10,textAlign:'right'}}>{props.emailMesage}</Text>}
     </View>
   );
 };

@@ -23,6 +23,8 @@ const ProfileScreens = () => {
   const dispatch = useDispatch()
   const firstName=useSelector(state => state?.auth?.User?.data?.lastName)
   const userdataFname=useSelector(state => state?.auth?.credential?.User?.lastName)
+  const kiffs=useSelector(state => state?.auth?.credential?.User?.kiffs)
+
   const [modalVisible, setModalVisible] = useState(false);
   const [image, setImage] = useState();
   console.log("tasweer",image)
@@ -76,22 +78,6 @@ const ProfileScreens = () => {
           </TouchableOpacity>
         </ImageBackground>
         <View style={styles.box}>
-          {/* <View style={styles.profile}>
-            <TouchableOpacity
-              onPress={() => { onFromPickerImage() }}
-            >
-              <Image
-                style={{
-                  height: height * 0.11,
-                  width: width * 0.2,
-                  resizeMode: 'contain',
-                  borderRadius: width * 0.5,
-                  alignSelf: 'center',
-                }}
-                source={require('../../assets/images/avatar.jpg')}
-              />
-            </TouchableOpacity>
-          </View> */}
           <ProfileImage/>
           
           <View
@@ -139,13 +125,12 @@ const ProfileScreens = () => {
             />
             <Text
               style={{
-                // fontSize: width * 0.04,
-                // fontWeight: '700',
+        
                 color: Colors.ButtonBorder,
                 fontFamily: 'Bebas Neue Pro Regular',
                 fontSize: width * 0.05,
               }}>
-              345 Points
+            0 Points
             </Text>
           </View>
           <Text
@@ -158,23 +143,11 @@ const ProfileScreens = () => {
               fontFamily: 'Bebas Neue Pro Regular',
               fontSize: width * 0.046,
               letterSpacing: 0.3,
-            }}>
-            TON PROFIL EST INCOMPLET !
+            }}>{kiffs==null?"TON PROFIL EST INCOMPLET !":"TON PROFIL EST COMPLET !"}
+            
           </Text>
           <View style={{ marginTop: height * 0.03 }}>
-            {/* <Text
-              style={{
-                position: 'absolute',
-                zIndex: 1,
-                marginLeft: width * 0.7,
-                marginTop: -height * 0.012,
-                color: 'white',
-                fontWeight: 'bold',
-                fontSize: width * 0.035,
-              }}>
-              100
-            </Text> */}
-            {/* progresss barrr */}
+        
             <Progressbar progress={1} />
           </View>
         </View>

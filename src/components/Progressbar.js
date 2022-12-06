@@ -6,17 +6,12 @@ import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 const { height, width } = Dimensions.get('window');
 const Progressbar = (props) => {
-  //  const  ok=useSelector((state)=>state?.auth?.data)
   const ok = useSelector(state => state?.auth?.progress)
   const percent = useSelector(state => state?.auth?.percent)
-  console.log(ok)
-
-  console.log("mydata", ok)
-  // const screen1=ok?.firstName!==null?0.2:null;
-  // const screen2=ok?.email!==null?0.4:null;
-  // const screen3=ok?.kiffs!==null?0.6:null;
-  // const screen4=ok?.needSupport!==null?0.8:null;
-  // const screen5=ok?.identityCard!==null?1:null;
+//   const step = useSelector(state => state?.auth?.User?.data?.futurGoal)
+//   var Board=step !== null
+//   step !== null?1:
+// console.log(step)
 
   return (
     <View>
@@ -45,11 +40,7 @@ const Progressbar = (props) => {
           marginLeft:width * ok/1.5||0
         }}
       >{ok*100}</Text></View>
-    // width * 0.1
-    // width * 0.25 
-    // width * 0.4 
-    // width * 0.55 
-    // width * 0.7 
+
   )
 }
 

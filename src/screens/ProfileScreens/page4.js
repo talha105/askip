@@ -168,9 +168,9 @@ const Page4 = ({ props, setPage, profile }) => {
             boxheight={height * 0.045}
             boxwidth={width * 0.925}
             dropdownwidth={width * 0.92}
-            placeholder={Q1.name ? <Text
+            placeholder={Q1?.name ? <Text
               style={{ color: "black" }}
-            >{Q1.name}</Text> : <Text style={{ color: "#afafaf" }} > Sélécteur de genre</Text>}
+            >{Q1?.name}</Text> : <Text style={{ color: "#afafaf" }} > Sélécteur de genre</Text>}
             data={Question1}
             customFunction={value => setQ1(value)}
           />
@@ -180,9 +180,9 @@ const Page4 = ({ props, setPage, profile }) => {
           <RelevatorSelector
             boxheight={height * 0.045}
             boxwidth={width * 0.925}
-            placeholder={Q2.firstName == undefined ? <Text style={{ color: "#afafaf" }} > Sélécteur de genre</Text> : <Text
+            placeholder={Q2?.firstName == undefined ? <Text style={{ color: "#afafaf" }} > Sélécteur de genre</Text> : <Text
               style={{ color: "black" }}
-            >{Q2.firstName + " " + Q2.lastName}</Text>}
+            >{Q2?.firstName + " " + Q2?.lastName}</Text>}
             customFunction={value => setQ2(value)}
             data={QuestionNo2}
           />
@@ -193,9 +193,9 @@ const Page4 = ({ props, setPage, profile }) => {
             boxheight={height * 0.045}
             boxwidth={width * 0.925}
             dropdownwidth={width * 0.92}
-            placeholder={Q3.name ? <Text
+            placeholder={Q3?.name ? <Text
               style={{ color: "black" }}
-            >{Q3.name}</Text> : <Text style={{ color: "#afafaf" }} > Sélécteur de genre</Text>}
+            >{Q3?.name}</Text> : <Text style={{ color: "#afafaf" }} > Sélécteur de genre</Text>}
             data={Question3}
             customFunction={value => setQ3(value)}
           />
@@ -206,9 +206,9 @@ const Page4 = ({ props, setPage, profile }) => {
             boxheight={height * 0.045}
             boxwidth={width * 0.925}
             dropdownwidth={width * 0.92}
-            placeholder={Q4.name ? <Text
+            placeholder={Q4?.name ? <Text
               style={{ color: "black" }}
-            >{Q4.name}</Text> : <Text style={{ color: "#afafaf" }} > Sélécteur de genre</Text>}
+            >{Q4?.name}</Text> : <Text style={{ color: "#afafaf" }} > Sélécteur de genre</Text>}
             data={Question4}
             customFunction={value => setQ4(value)}
           />
