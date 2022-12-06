@@ -30,7 +30,7 @@ export const registerUser = (data, setLoading2, setError2, refRBSheet, refRBShee
   try {
     setLoading2(true)
     const response = await axios.post(`${base_URL}/user/register`, data)
-    console.log("register", response)
+    console.log("register", response.data)
     if (response?.data?.data?.success) {
       refRBSheet.current.open()
       refRBSheet2.current.close()
@@ -231,7 +231,7 @@ export const getKiffsData = () => async (dispatch) => {
 export const profileUpdate = (data, userId, setPage) => async (dispatch) => {
   try {
     const response = await axios.put(`${base_URL}/user/${userId}`, data)
-    console.log(response?.data?.data)
+    console.log("5data",response?.data?.data)
     // console.log(response)
     if (response?.data?.data) {
       // console.log("dispatch here",(response))
@@ -248,10 +248,7 @@ export const profileUpdate = (data, userId, setPage) => async (dispatch) => {
       );
       dispatch({
         type: CONSULT_DATA,
-        payload: response?.data?.data,
-      })
-      dispatch({
-        type: "EMPTY_BAR"
+        payload: response?.data?.data.data,
       })
     }
   }

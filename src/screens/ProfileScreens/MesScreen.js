@@ -20,7 +20,7 @@ import { useEffect } from 'react';
 const MesScreen = () => {
   const [Page, setPage] = useState(1);
   const profile = useSelector(state => state?.auth?.User)
-console.log("Sfdsdf",profile)
+console.log("Sfdsdf",useSelector(state => state?.auth))
   return (
     <>
       {/* <Text
