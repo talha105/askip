@@ -113,7 +113,7 @@ const AppNav = () => {
         name="WalletScreens"
         component={WalletScreens}
         options={{
-          tabBarLabel: 'Wallet',
+          tabBarLabel: 'RDV',
           tabBarActiveTintColor: '#e73d34',
           tabBarInactiveTintColor: 'black',
           headerShown: false,

@@ -30,11 +30,12 @@ const HomeScreens = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
   const dekhnaData = useSelector((state) => state)
-  console.log("dekhnaDatadekhnaData",dekhnaData)
   const [getSubEv, setgetSubEv] = useState()
   const [getSub, setgetSub] = useState()
   const [EventID, setEventID] = useState()
   const firstName = useSelector(state => state?.auth?.User?.data?.lastName)
+  const Revelator = useSelector(state => state?.auth?.User?.relatedRevelateur)
+  const RID = useSelector(state => state?.auth?.credential?.User?.relatedRevelateur)
   const Fname = useSelector(state => state?.auth?.User?.data?.firstName)
   const userdataFname = useSelector(state => state?.auth?.credential?.User?.lastName)
   const UserFirstName = useSelector(state => state?.auth?.credential?.User?.firstName)
@@ -46,8 +47,6 @@ const HomeScreens = ({ navigation }) => {
 
   }, [])
 
-
-  console.log("dhnsajkgdgsakjbdjasjlkdhjlksahjfhsalkjhfkljsda", getSubEv?.data?.length == 0)
   const fetchData = async () => {
     const { data } = await getSubscribedEvents(userId)
     setgetSubEv(data)
@@ -92,7 +91,11 @@ const HomeScreens = ({ navigation }) => {
   ];
 
   const RawBottomSheet = () => {
-    console.log("getSub///////", getSub)
+   
+    let b=getSub?.item?.subsIdAdminAndRevelature?.filter((i) => i._id === Revelator||RID );
+    let c=b?.[0]?.firstName +" " + b?.[0]?.lastName
+    let d=getSub?.item?.subsIdAdminAndRevelature[0]?.firstName+" "+getSub?.item?.subsIdAdminAndRevelature[0]?.lastName
+
     return (
       <View
         style={{
@@ -110,7 +113,7 @@ const HomeScreens = ({ navigation }) => {
             },
           ]}
           source={{
-            uri: `${base_URL_IMAGE+getSub?.item?.eventImage}`,
+            uri: `${base_URL_IMAGE + getSub?.item?.eventImage}`,
           }}
         />
         <View
@@ -125,7 +128,7 @@ const HomeScreens = ({ navigation }) => {
           }}></View>
         <View style={styles.rawBottomFirstView}>
           <Text style={styles.rawBottomTitle}>{getSub?.item?.eventName}{' '}</Text>
-          <Text style={styles.rawBottomshortTitle}>avec {getSub?.item?.organizerBy}</Text>
+          <Text style={styles.rawBottomshortTitle}>avec {c||d} </Text>
         </View>
         <View style={styles.rawBottomSecondView}>
           <Text style={styles.rawBottomdescription}>{getSub?.item?.category}</Text>
@@ -139,7 +142,7 @@ const HomeScreens = ({ navigation }) => {
             source={require('../../assets/images/locLogo.png')}
           />
           <Text style={styles.rawBottomlocation}>
-          {getSub?.item?.postalAddress},{getSub?.item?.city},{getSub?.item?.zipCode}
+            {getSub?.item?.postalAddress},{getSub?.item?.city},{getSub?.item?.zipCode}
           </Text>
         </View>
         <ScrollView showsVerticalScrollIndicator={true}>
@@ -196,18 +199,20 @@ const HomeScreens = ({ navigation }) => {
           visible={modalVisible}
           onRequestClose={() => {
             // Alert.alert("Modal has been closed.");
-            setModalVisible(!modalVisible);
+            setModalVisible(false);
           }}>
-          <View style={styles.QRModalView}>
+          <TouchableOpacity
+          onPress={()=>{  setModalVisible(false);}}
+          style={styles.QRModalView}>
             <View style={styles.QRModalInnerView}>
               <TouchableOpacity
                 onPress={() => {
-                  setModalVisible(false);
+                  // setModalVisible(false);
                 }}>
                 <QRCode size={170} value={`userid:${userId},eventId:${EventID},lastName:${firstName || userdataFname},firstName:${Fname || UserFirstName}`} />
               </TouchableOpacity>
             </View>
-          </View>
+          </TouchableOpacity>
         </Modal>
       </>
     );

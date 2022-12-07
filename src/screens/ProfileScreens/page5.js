@@ -112,7 +112,6 @@ useEffect(()=>{
           height={height * 0.045}
           width={width * 0.925}
           heights={height * 0.05}
-          type="numeric"
           setvalue={setIdCardNo}
           value={IdCardNo}
         />

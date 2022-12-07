@@ -105,7 +105,7 @@ const Page4 = ({ props, setPage, profile }) => {
   useEffect(() => {
     if (profile?.meetLocation !== null) setQ(profile?.meetLocation)
     if (profile?.disabledWorker !== null) {
-      if (profile.disabledWorker?.toString() == "false") {
+      if (profile?.disabledWorker?.toString() == "false") {
         setQ1({
           "id": 2,
           "name": "Non"
@@ -117,28 +117,28 @@ const Page4 = ({ props, setPage, profile }) => {
         })
       }
     }
-    if(profile?.relatedRevelateur !== null){
-      const q2Data=relevantData?.data?.findRevelateur.filter(it=>it._id==profile?.relatedRevelateur)[0]
+    if (profile?.relatedRevelateur !== null) {
+      const q2Data = relevantData?.data?.findRevelateur.filter(it => it._id == profile?.relatedRevelateur)[0]
       setQ2(q2Data)
     }
-    if(profile?.registeredSPE!==null){
-      const q3Data=Question3.filter(it=>it.name==profile?.registeredSPE)[0]
+    if (profile?.registeredSPE !== null) {
+      const q3Data = Question3.filter(it => it.name == profile?.registeredSPE)[0]
       setQ3(q3Data)
     }
-    if(profile?.needSupport!==null){
-      const q4Data=Question4.filter(it=>it.name==profile?.needSupport)[0]
+    if (profile?.needSupport !== null) {
+      const q4Data = Question4.filter(it => it.name == profile?.needSupport)[0]
       setQ4(q4Data)
     }
-    if(profile?.futurGoal!==null){
-      const q5Data=Question5.filter(it=>it.name==profile?.futurGoal)[0]
+    if (profile?.futurGoal !== null) {
+      const q5Data = Question5.filter(it => it.name == profile?.futurGoal)[0]
       setQ5(q5Data)
     }
-    if(profile?.degreeLevel!==null){
-      const q6Data=Question6.filter(it=>it.name==profile?.degreeLevel)[0]
+    if (profile?.degreeLevel !== null) {
+      const q6Data = Question6.filter(it => it.name == profile?.degreeLevel)[0]
       setQ6(q6Data)
     }
-    if(profile?.professionalSituation!==null){
-      const q7Data=Question7.filter(it=>it.name==profile?.professionalSituation)[0]
+    if (profile?.professionalSituation !== null) {
+      const q7Data = Question7.filter(it => it.name == profile?.professionalSituation)[0]
       setQ7(q7Data)
     }
   }, [profile])
@@ -170,7 +170,8 @@ const Page4 = ({ props, setPage, profile }) => {
             dropdownwidth={width * 0.92}
             placeholder={Q1?.name ? <Text
               style={{ color: "black" }}
-            >{Q1?.name}</Text> : <Text style={{ color: "#afafaf" }} > Sélécteur de genre</Text>}
+            >{Q1?.name}</Text> : <Text style={{ color: "#afafaf" }} >
+              Sélectionnez Répondre ici</Text>}
             data={Question1}
             customFunction={value => setQ1(value)}
           />
@@ -180,9 +181,10 @@ const Page4 = ({ props, setPage, profile }) => {
           <RelevatorSelector
             boxheight={height * 0.045}
             boxwidth={width * 0.925}
-            placeholder={Q2?.firstName == undefined ? <Text style={{ color: "#afafaf" }} > Sélécteur de genre</Text> : <Text
-              style={{ color: "black" }}
-            >{Q2?.firstName + " " + Q2?.lastName}</Text>}
+            placeholder={Q2?.firstName == undefined ? <Text style={{ color: "#afafaf" }} >
+              Sélectionnez Répondre ici</Text> : <Text
+                style={{ color: "black" }}
+              >{Q2?.firstName + " " + Q2?.lastName}</Text>}
             customFunction={value => setQ2(value)}
             data={QuestionNo2}
           />
@@ -195,20 +197,22 @@ const Page4 = ({ props, setPage, profile }) => {
             dropdownwidth={width * 0.92}
             placeholder={Q3?.name ? <Text
               style={{ color: "black" }}
-            >{Q3?.name}</Text> : <Text style={{ color: "#afafaf" }} > Sélécteur de genre</Text>}
+            >{Q3?.name}</Text> : <Text style={{ color: "#afafaf" }} >
+              Sélectionnez Répondre ici</Text>}
             data={Question3}
             customFunction={value => setQ3(value)}
           />
         </View>
         <View style={styles.mainview}>
-          <Text style={styles.txt}>Tu as besoin d’un acommpagnement à...?</Text>
+          <Text style={styles.txt}>Tu as besoin d’un acommpagnement?</Text>
           <Selector
             boxheight={height * 0.045}
             boxwidth={width * 0.925}
             dropdownwidth={width * 0.92}
             placeholder={Q4?.name ? <Text
               style={{ color: "black" }}
-            >{Q4?.name}</Text> : <Text style={{ color: "#afafaf" }} > Sélécteur de genre</Text>}
+            >{Q4?.name}</Text> : <Text style={{ color: "#afafaf" }} >
+              Sélectionnez Répondre ici</Text>}
             data={Question4}
             customFunction={value => setQ4(value)}
           />
@@ -221,7 +225,8 @@ const Page4 = ({ props, setPage, profile }) => {
             dropdownwidth={width * 0.92}
             placeholder={Q5?.name ? <Text
               style={{ color: "black" }}
-            >{Q5?.name}</Text> : <Text style={{ color: "#afafaf" }} > Sélécteur de genre</Text>}
+            >{Q5?.name}</Text> : <Text style={{ color: "#afafaf" }} >
+              Sélectionnez Répondre ici</Text>}
             data={Question5}
             customFunction={value => setQ5(value)}
           />
@@ -234,7 +239,8 @@ const Page4 = ({ props, setPage, profile }) => {
             dropdownwidth={width * 0.92}
             placeholder={Q6?.name ? <Text
               style={{ color: "black" }}
-            >{Q6?.name}</Text> : <Text style={{ color: "#afafaf" }} > Sélécteur de genre</Text>}
+            >{Q6?.name}</Text> : <Text style={{ color: "#afafaf" }} >
+              Sélectionnez Répondre ici</Text>}
             data={Question6}
             customFunction={value => setQ6(value)}
           />
@@ -247,7 +253,8 @@ const Page4 = ({ props, setPage, profile }) => {
             dropdownwidth={width * 0.92}
             placeholder={Q7?.name ? <Text
               style={{ color: "black" }}
-            >{Q7?.name}</Text> : <Text style={{ color: "#afafaf" }} > Sélécteur de genre</Text>}
+            >{Q7?.name}</Text> : <Text style={{ color: "#afafaf" }} >
+              Sélectionnez Répondre ici</Text>}
             data={Question7}
             customFunction={value => setQ7(value)}
           />

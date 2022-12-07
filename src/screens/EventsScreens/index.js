@@ -51,7 +51,8 @@ const EventsScreens = ({ navigation }) => {
   const DOB = useSelector((state) => state?.auth?.credential?.User?.birthDate)
   const currentDOB = moment(DOB).format("YYYY")
   const dispatch = useDispatch()
-
+  const Revelator = useSelector(state => state?.auth?.User?.relatedRevelateur)
+  const RID = useSelector(state => state?.auth?.credential?.User?.relatedRevelateur)
   useEffect(() => {
     event_by_Id()
   }, [data])
@@ -66,7 +67,7 @@ const EventsScreens = ({ navigation }) => {
       setminor(false)
     }
   }, [])
-  console.log(minor)
+
   const fetchData = async () => {
     const { data } = await dispatch(getEvents());
 
@@ -75,7 +76,7 @@ const EventsScreens = ({ navigation }) => {
 
   const Profile_Checking = async () => {
     const { data } = await dispatch(ProfileChecking(userId, setPower, setBTN));
-    console.log(data);
+
   }
 
   const event_by_Id = async () => {
@@ -97,8 +98,7 @@ const EventsScreens = ({ navigation }) => {
       event_by_Id()
     })
   }
-  console.log("events on eent screen", events)
-  console.log("events under event screen", eventsDetail)
+
 
 
 
@@ -183,7 +183,10 @@ const EventsScreens = ({ navigation }) => {
 
   const RawBottomSheet = () => {
     let a = (eventsDetail?.data?.data?.subscriptionIds)?.some((i) => i == userId);
-    console.log("llalalallal", a)
+    let b = eventsDetail?.data?.data?.subsIdAdminAndRevelature?.filter((i) => i._id === Revelator || RID);
+    let c = b?.[0]?.firstName + " " + b?.[0]?.lastName
+    let d = eventsDetail?.data?.data?.subsIdAdminAndRevelature[0]?.firstName + " " + eventsDetail?.data?.data?.subsIdAdminAndRevelature[0]?.lastName
+
     return (
       <View
         style={{
@@ -233,7 +236,7 @@ const EventsScreens = ({ navigation }) => {
           </Text>
           <Text style={styles.rawBottomshortTitle}>
 
-            avec {eventsDetail?.data?.data?.organizerId?.firstName}
+            avec {c || d}
           </Text>
         </View>
         <View style={styles.rawBottomSecondView}>
@@ -246,16 +249,16 @@ const EventsScreens = ({ navigation }) => {
             {/* {data.item.Dateandtime} */}
           </Text>
         </View>
-        <View style={styles.rawBottomThirdView}>
+       {eventsDetail?.data?.data?.mandatoryRegistrationOnline == false? <View style={styles.rawBottomThirdView}>
           <Image
             style={styles.rawBottomtinyImage}
             source={require('../../assets/images/locLogo.png')}
           />
           <Text style={styles.rawBottomlocation}>
 
-          {eventsDetail?.data?.data?.postalAddress},{eventsDetail?.data?.data?.city}{eventsDetail?.data?.data?.zipCode}
+            {eventsDetail?.data?.data?.postalAddress},{eventsDetail?.data?.data?.city}{eventsDetail?.data?.data?.zipCode}
           </Text>
-        </View>
+        </View>: null}
         <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnabled={true}>
           <TouchableOpacity activeOpacity={1}>
             <Text style={styles.rawBottomMainDescription}>
@@ -275,7 +278,7 @@ const EventsScreens = ({ navigation }) => {
               onPress={() =>
                 setunsubmodal(true)
               }>
-              <Text style={styles.rawBottomButtonText}>Je m’inscris !</Text>
+              <Text style={styles.rawBottomButtonText}>Je me désinscris !</Text>
             </TouchableOpacity>
             : <>
               {BTN == false ? <TouchableOpacity
@@ -492,7 +495,7 @@ const EventsScreens = ({ navigation }) => {
                 <>
                   <Text style={styles.modalText}>
                     <Text style={{ fontFamily: 'Bebas Neue Pro Bold', fontSize: width * 0.048 }}> {Name}, </Text>
-                    Prénom, veux-tu vraiment
+                    veux-tu vraiment
                     te désinscrire de cet événement ?
                   </Text>
                   <View
@@ -523,13 +526,9 @@ const EventsScreens = ({ navigation }) => {
     );
   };
 
-  function id() {
-    return userId
-  }
+
   const LowerRender = item => {
-    console.log("first", userId, item?.item?.subscriptionIds)
     let a = (item?.item?.subscriptionIds)?.some((i) => i == userId);
-    console.log("haara item", a)
     return (
       <TouchableOpacity
         onPress={() => {
